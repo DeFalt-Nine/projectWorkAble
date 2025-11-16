@@ -8,12 +8,18 @@ import androidx.navigation.compose.rememberNavController
 import com.example.projectworkable.ui.screens.HeroScreen
 import com.example.projectworkable.ui.screens.JobsScreen
 import com.example.projectworkable.ui.screens.ProfileScreen
+import com.example.projectworkable.ui.screens.ResoureHubScreen
+import com.example.projectworkable.ui.screens.BlogScreen
 
 // Simple sealed class for routes — helpful and type-safe
 sealed class Screen(val route: String) {
     object Home : Screen("home")
     object Jobs : Screen("jobs")
     object Profile : Screen("profile")
+
+    object Resource : Screen("resource")
+
+    object Blog : Screen("blog")
 }
 
 // Root Graph composable. Use this from MainActivity.
@@ -30,6 +36,12 @@ fun WorkableNavHost(
         }
         composable(Screen.Profile.route) {
             ProfileScreen()
+        }
+        composable(Screen.Resource.route) {
+            ResoureHubScreen()
+        }
+        composable(Screen.Blog.route) {
+            BlogScreen()
         }
     }
 }

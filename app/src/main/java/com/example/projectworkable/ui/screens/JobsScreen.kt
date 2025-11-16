@@ -1,3 +1,6 @@
+package com.example.projectworkable.ui.screens
+
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -19,10 +22,11 @@ data class Job(
     val tag: String
 )
 
+@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun JobsScreen() {
-    // In a real app, this list would come from a ViewModel or an API call.
     val jobs = listOf(
+        // temporary data
         Job(
             title = "Software Engineer",
             description = "We are looking for a skilled Software Engineer to join our dynamic team...",
@@ -36,7 +40,6 @@ fun JobsScreen() {
             companyLogo = painterResource(id = R.drawable.ic_temporary),
             tag = "Product"
         ),
-        // --- ADD YOUR NEW JOBS HERE ---
         Job(
             title = "Head Chef",
             description = "Manage our kitchen staff and create innovative new dishes for our menu.",
@@ -49,7 +52,6 @@ fun JobsScreen() {
             companyLogo = painterResource(id = R.drawable.ic_temporary), // Add a new icon
             tag = "Design"
         )
-        // You can add as many jobs as you want here...
     )
 
     // The LazyColumn will automatically create a card for each job in the list above.
@@ -70,7 +72,6 @@ fun JobsScreen() {
             }
         }
 
-        // Job Items List - NO CHANGES NEEDED HERE
         items(jobs) { job ->
             JobCard(
                 title = job.title,

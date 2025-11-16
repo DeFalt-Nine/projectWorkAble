@@ -22,8 +22,10 @@ fun BottomNavBar(navController: NavController) {
     // define your three bottom items
     val items = listOf(
         BottomNavItem(Screen.Home.route, R.drawable.ic_home, "Home"),
+        BottomNavItem(Screen.Resource.route, R.drawable.ic_temporary, "Resources"),
         BottomNavItem(Screen.Jobs.route, R.drawable.ic_jobs, "Jobs"),
-        BottomNavItem(Screen.Profile.route, R.drawable.ic_profile, "Profile")
+        BottomNavItem(Screen.Blog.route, R.drawable.ic_temporary, "Blog"),
+        BottomNavItem(Screen.Profile.route, R.drawable.ic_profile, "Profile"),
     )
 
     // observe current route so we can highlight the selected tab
