@@ -1,7 +1,9 @@
 package com.example.projectworkable.ui.components
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.LocalIndication
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -16,6 +18,15 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+
+
+/**
+ * @param title The main title of the blog post.
+ * @param description A short summary of the blog post.
+ * @param image The painter resource for the card's banner image.
+ * @param tag A category tag (e.g., "Career", "Skills").
+ * @param onClick A lambda function to be invoked when the card is clicked.
+ */
 
 @Composable
 fun JobCard(
@@ -76,28 +87,31 @@ fun JobBoxItem(
     onClick: () -> Unit,
     tag: String
 ) {
-    // 2. Implemented UI for the card item
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 8.dp, horizontal = 16.dp)
-            .clickable(onClick = onClick), // Make the entire card clickable
+            .clickable(
+                interactionSource = remember { MutableInteractionSource() },
+                indication = LocalIndication.current,
+                onClick = onClick
+            ),
         shape = RoundedCornerShape(12.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
-        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.surface
+        )
     ) {
         Row(
             modifier = Modifier.padding(16.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            // Image Composable (e.g., Company Logo)
             image()
 
             Spacer(modifier = Modifier.width(16.dp))
 
-            // Column for Title and Description
             Column(
-                modifier = Modifier.weight(1f) // Takes up remaining space
+                modifier = Modifier.weight(1f)
             ) {
                 Text(
                     text = title,
@@ -110,9 +124,10 @@ fun JobBoxItem(
                     text = description,
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    maxLines = 2 // Limit description lines for a clean look
+                    maxLines = 2
                 )
             }
         }
     }
 }
+

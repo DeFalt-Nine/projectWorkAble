@@ -19,9 +19,6 @@ import androidx.compose.ui.res.painterResource
 import com.example.projectworkable.R
 
 /**
- * A composable that displays a single blog post in a card format.
- * It's designed to be clickable and visually distinct.
- *
  * @param title The main title of the blog post.
  * @param description A short summary of the blog post.
  * @param image The painter resource for the card's banner image.

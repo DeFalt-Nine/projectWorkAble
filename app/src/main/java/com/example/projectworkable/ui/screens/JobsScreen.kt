@@ -1,18 +1,32 @@
 package com.example.projectworkable.ui.screens
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.slideInVertically
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import com.example.projectworkable.ui.components.JobCard
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.projectworkable.R
 
 data class Job(
@@ -26,11 +40,9 @@ data class Job(
 @Composable
 fun JobsScreen() {
     val jobs = listOf(
-        // temporary data
         Job(
             title = "Software Engineer",
             description = "We are looking for a skilled Software Engineer to join our dynamic team...",
-            // Ensure you have these drawables in your res/drawable folder
             companyLogo = painterResource(id = R.drawable.ic_temporary),
             tag = "Engineering"
         ),
@@ -42,44 +54,77 @@ fun JobsScreen() {
         ),
         Job(
             title = "Head Chef",
-            description = "Manage our kitchen staff and create innovative new dishes for our menu.",
-            companyLogo = painterResource(id = R.drawable.ic_temporary), // Add a new icon
+            description = "Manage our kitchen staff and create innovative new dishes.",
+            companyLogo = painterResource(id = R.drawable.ic_temporary),
             tag = "Culinary"
         ),
         Job(
             title = "Graphic Designer",
-            description = "Create visually stunning graphics for marketing campaigns and our brand.",
-            companyLogo = painterResource(id = R.drawable.ic_temporary), // Add a new icon
+            description = "Create stunning graphics for marketing campaigns.",
+            companyLogo = painterResource(id = R.drawable.ic_temporary),
             tag = "Design"
         )
     )
 
-    // The LazyColumn will automatically create a card for each job in the list above.
+    var visible by remember { mutableStateOf(false) }
+    LaunchedEffect(Unit) { visible = true }
+
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
         contentPadding = PaddingValues(24.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp)
+        verticalArrangement = Arrangement.spacedBy(16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        // Header Item
+
+        /** ---------------- HEADER ---------------- */
         item {
-            Column {
-                Text(
-                    text = stringResource(id = R.string.jobs_screen_title),
-                    style = MaterialTheme.typography.headlineMedium
-                )
-                Spacer(modifier = Modifier.height(12.dp))
-                Text(text = stringResource(id = R.string.jobs_screen_description))
+            AnimatedVisibility(
+                visible = visible,
+                enter = slideInVertically(animationSpec = tween(600)) +
+                        fadeIn(animationSpec = tween(600))
+            ) {
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+
+                    Image(
+                        painter = painterResource(id = R.drawable.ic_accessibility),
+                        contentDescription = "WorkAble Logo",
+                        modifier = Modifier.size(80.dp),
+                        contentScale = ContentScale.Fit,
+                        colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.primary)
+                    )
+
+                    Spacer(modifier = Modifier.height(10.dp))
+
+                    Text(
+                        text = "WorkAble Jobs",
+                        fontSize = 32.sp,
+                        color = MaterialTheme.colorScheme.primary,
+                        style = MaterialTheme.typography.headlineLarge
+                    )
+
+                    Spacer(modifier = Modifier.height(4.dp))
+
+                    Text(
+                        text = "Latest opportunities picked for you",
+                        fontSize = 14.sp,
+                        color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.7f)
+                    )
+                }
             }
+
+            Spacer(modifier = Modifier.height(18.dp))
         }
 
+        /** ---------------- JOB CARDS LIST ---------------- */
         items(jobs) { job ->
             JobCard(
                 title = job.title,
                 description = job.description,
                 image = job.companyLogo,
-                onClick = { /* Handle click for this specific job */ },
-                tag = job.tag
+                tag = job.tag,
+                onClick = { /* Handle job click */ }
             )
         }
     }
 }
+
