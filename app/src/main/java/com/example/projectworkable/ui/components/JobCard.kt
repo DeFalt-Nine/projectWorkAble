@@ -23,6 +23,7 @@ import androidx.compose.ui.unit.dp
 /**
  * @param title The main title of the blog post.
  * @param description A short summary of the blog post.
+ * @param detail Description of the job.
  * @param image The painter resource for the card's banner image.
  * @param tag A category tag (e.g., "Career", "Skills").
  * @param onClick A lambda function to be invoked when the card is clicked.
@@ -32,6 +33,7 @@ import androidx.compose.ui.unit.dp
 fun JobCard(
     title: String,
     description: String,
+    detail: String,
     image: Painter,
     onClick: () -> Unit, // We can keep this for future navigation
     tag: String
@@ -43,6 +45,7 @@ fun JobCard(
     JobBoxItem(
         title = title,
         description = description,
+        detail = detail,
         image = {
             Image(
                 painter = image,
@@ -65,7 +68,11 @@ fun JobCard(
                 Text(text = title, style = MaterialTheme.typography.headlineSmall)
             },
             text = {
-                Text(text = description, style = MaterialTheme.typography.bodyLarge)
+                Column {
+                    Text(text = description, style = MaterialTheme.typography.bodyLarge)
+                    Spacer(modifier = Modifier.height(6.dp))
+                    Text(text = detail, style = MaterialTheme.typography.bodyLarge)
+                }
             },
             confirmButton = {
                 TextButton(
@@ -85,7 +92,8 @@ fun JobBoxItem(
     description: String,
     image: @Composable () -> Unit,
     onClick: () -> Unit,
-    tag: String
+    tag: String,
+    detail: String
 ) {
     Card(
         modifier = Modifier
