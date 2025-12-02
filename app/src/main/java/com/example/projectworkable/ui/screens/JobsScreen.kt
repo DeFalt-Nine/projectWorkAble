@@ -32,6 +32,7 @@ import com.example.projectworkable.R
 data class Job(
     val title: String,
     val description: String,
+    val detail: String,
     val companyLogo: Painter,
     val tag: String
 )
@@ -42,25 +43,29 @@ fun JobsScreen() {
     val jobs = listOf(
         Job(
             title = "Software Engineer",
-            description = "We are looking for a skilled Software Engineer to join our dynamic team...",
+            description = "Join TechNova Solutions as a Software Engineer and help build high-performance applications used by thousands of customers.",
+            detail = "Work with Kotlin, Java, and cloud technologies to design and implement scalable features.",
             companyLogo = painterResource(id = R.drawable.ic_temporary),
             tag = "Engineering"
         ),
         Job(
             title = "Product Manager",
-            description = "Lead the development of our next-generation products...",
+            description = "Lead the development of next-generation digital products at VisionPath Labs.",
+            detail = "Coordinate with engineering, design, and marketing teams while driving product strategy.",
             companyLogo = painterResource(id = R.drawable.ic_temporary),
             tag = "Product"
         ),
         Job(
             title = "Head Chef",
-            description = "Manage our kitchen staff and create innovative new dishes.",
+            description = "Aurora Bistro seeks an experienced Head Chef to manage kitchen staff and create innovative dishes.",
+            detail = "Oversee daily kitchen operations, menu creation, and food quality control.",
             companyLogo = painterResource(id = R.drawable.ic_temporary),
             tag = "Culinary"
         ),
         Job(
             title = "Graphic Designer",
-            description = "Create stunning graphics for marketing campaigns.",
+            description = "Create stunning visual assets for marketing campaigns as part of PixelCraft Media’s creative team.",
+            detail = "Produce digital ads, social media graphics, and brand materials using Adobe Creative Suite.",
             companyLogo = painterResource(id = R.drawable.ic_temporary),
             tag = "Design"
         )
@@ -120,6 +125,7 @@ fun JobsScreen() {
             JobCard(
                 title = job.title,
                 description = job.description,
+                detail = job.detail,
                 image = job.companyLogo,
                 tag = job.tag,
                 onClick = { /* Handle job click */ }
